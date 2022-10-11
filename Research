@@ -8,3 +8,8 @@ Below is an example Wiki Markdown language usage.
   2. vegetables
      - carrot
      - broccoli
+
+For GitHub part; push, pull, commit, add, branch, merge are critical functions.
+  Pull requests informs others about changes I have made to a branch in a repository.
+  Push command updates the remote branch with local commits.
+  The git merge command lets us take the independent lines of development created by git branch and integrate them into a single branch.
