@@ -1,2 +1,2 @@
 # Boun1
-Bogazici universitesi SWE573 dersi için
+Bogazici universitesi SWE573 dersi için hazırlanmış repodur. 
