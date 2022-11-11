@@ -29,3 +29,4 @@ def about(request):
         'posts': Post.objects.all()
        }     
     return render(request,'blog/about.html',{'title':'AboutView'})
+
