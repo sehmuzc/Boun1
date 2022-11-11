@@ -1,16 +1,26 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">	
-	<h1>{{user.username}}</h1>
-	<h2>{{user.email}}</h2>
-  </div>
 		<div class="content-section">
 		  <div class="media">
 			<img class="rounded-circle account-img" src="{{user.profile.image.url}}">
-			<div class="media-body">
-			  <h2 class="account-heading">{{user.username}}</h2>
-			  <p class="text-secondary">{{user.email}}</p>
+			  <div class="media-body">
+				     <div class="col-8 mb-3">
+                    <h4>Username</h4>
+                    <p class="text-muted">{{user.username}}</p>
+                  </div>
+                    <div class="col-8 mb-3">
+                    <h4>First and Last Name</h4>
+                    <p class="text-muted">{{user.first_name}} {{user.last_name}}  </p>
+                  </div>
+                  <div class="col-8 mb-3">
+                    <h4>E-Mail Address</h4>
+                    <p class="text-muted">{{user.email}}</p>
+                  </div>
+                  <div class="col-8 mb-3">
+                    <h4>Last Login Time</h4>
+                    <p class="text-muted">{{ user.last_login |date:"d F Y H:i:s"}}</p>
+                  </div>
 			</div>
 		  </div>
 		  <!-- FORM HERE -->
