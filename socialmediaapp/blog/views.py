@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import Post
+from django.views.generic import ListView
+from django.views.generic import DetailView # This view is imported for blogpost details.
 
-# Create your views here.
+
 
 posts = [
     {
@@ -30,3 +32,11 @@ def about(request):
        }     
     return render(request,'blog/about.html',{'title':'AboutView'})
 
+class PostListView(ListView):
+    model= Post
+    template_name = 'blog/home.html'
+    context_object_name='posts'
+    ordering = ['-date_posted']  # Ordering of posts so that newest comes on top
+
+class PostDetailView(DetailView):
+    model = Post

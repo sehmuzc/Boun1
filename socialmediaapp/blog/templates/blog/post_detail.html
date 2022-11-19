@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+{% if user == object.author %}
+<article class="media content-section">
+    <div class="media-body">
+         <div class="article-metadata">
+            <h2 class="article-title"> {{ object.title }}</h2>
+            <p class="article-content">{{ object.content }}</p>
+         </div>
+    	      <a class="mr-2" href="#">{{ object.author }}</a>
+            <small class="text-muted">{{ object.date_posted |date:"d F Y H:i:s"}}</small>
+ </div>
+</article>
+{% endif %}
+
+{% endblock content %}
