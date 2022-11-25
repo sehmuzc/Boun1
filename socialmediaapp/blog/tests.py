@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from .models import Post
 
 # Check if the register and post entry page is successfully opened.
 class UrlTests(TestCase):
@@ -16,10 +17,20 @@ class DirecttoLogin(TestCase):
         response = self.client.get('/profile/')
         self.assertEquals(response.status_code, 302)
 
-# Check if the user can be created successfully
-class UserTest(TestCase):
-    def setUp(self):
-        User.objects.create(username='TestUser1')
-    def test_user_created(self):
-        user = User.objects.filter(username='TestUser1')
-        self.assertTrue(user.exists())
+class Test_Title(TestCase):
+    def test_authors(self):
+        user2 = User.objects.create_user(username='test2', password='pass2', email='test2@gmail.com')
+        spost = Post.objects.create(title='title2', author=user2, content='content2')
+        self.assertEquals(spost.title, "title2")
+class ContentTest(TestCase):
+    def test_content(self):
+        user3 = User.objects.create_user(username='test3', password='pass3', email='test3@gmail.com')
+        tpost = Post.objects.create(title='title3', author=user3, content='content3')
+        self.assertEquals(tpost.content, 'content3')
+
+class Test_Author(TestCase):
+    def test_authors(self):
+        user4 = User.objects.create_user(username='test4', password='pass4', email='test4@gmail.com')
+        fpost = Post.objects.create(title='title4', author=user4, content='content4')
+        self.assertEquals(fpost.author, user4)
+

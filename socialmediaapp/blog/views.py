@@ -42,7 +42,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ['title' , 'content']
+    fields = ['title' , 'content', 'link']
     def form_valid(self, form):
         form.instance.author=self.request.user
         return super().form_valid(form)
