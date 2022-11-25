@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'socialdatabase',  
         'USER': 'root',  
         'PASSWORD': '135135',  
-        'HOST': '127.0.0.1',  
+        'HOST': '127.0.0.1',
         'PORT': '3306',  
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 

@@ -2,8 +2,7 @@ from django.shortcuts import render
 from .models import Post
 from django.views.generic import ListView
 from django.views.generic import DetailView # This view is imported for blogpost details.
-
-
+from django.views.generic import CreateView
 
 posts = [
     {
@@ -40,3 +39,11 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title' , 'content']
+    def form_valid(self, form):
+        form.instance.author=self.request.user
+        return super().form_valid(form)
+
