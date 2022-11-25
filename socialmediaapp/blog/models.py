@@ -8,6 +8,7 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User,on_delete= models.CASCADE)
+    link = models.CharField(max_length=200)
     likes = models.ManyToManyField(User,related_name='blogposts')
 
     def __str__(self):
