@@ -6,7 +6,8 @@ from django.views.generic import DetailView # This view is imported for blogpost
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
-
+from users.models import Profile
+from itertools import chain
 posts = [
     {
 'author': 'Sehmuz',
@@ -21,7 +22,18 @@ posts = [
 'date_posted':' 30 Ekim 2022'
     }
 ]
-
+def posts_of_following_profiles(request):
+    profile = Profile.objects.get(user=request.user)
+    users = [user for user in profile.following.all()]
+    print(users)
+    posts = []
+    qs = None
+    for u in users:
+        userposts = Post.objects.filter(author=u)
+        posts.append(userposts)
+    if len(posts)>0:
+        qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
+    return render(request, 'blog/about2.html', {'posts':qs})
 def home(request):
     context =  {
         'posts': Post.objects.all()
