@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 from django.views.generic import DetailView # This view is imported for blogpost details.
 from django.views.generic import CreateView
+from django.views.generic import UpdateView
+from django.views.generic import DeleteView
 
 posts = [
     {
@@ -29,7 +32,7 @@ def about(request):
     context =  {
         'posts': Post.objects.all()
        }     
-    return render(request,'blog/about.html',{'title':'AboutView'})
+    return render(request,'blog/about.html',{'title':'About Page'})
 
 class PostListView(ListView):
     model= Post
@@ -40,10 +43,32 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-class PostCreateView(CreateView):
+#LoginRequiredMixin post entry sayfasına girildiğinde logine yönlendirme için kullanılıyor.
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title' , 'content', 'link']
     def form_valid(self, form):
         form.instance.author=self.request.user
         return super().form_valid(form)
 
+class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title' , 'content', 'link']
+    def form_valid(self, form):
+        form.instance.author=self.request.user
+        return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return 1
+        return 0
+
+
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = Post
+    success_url='/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return 1
+        return 0
