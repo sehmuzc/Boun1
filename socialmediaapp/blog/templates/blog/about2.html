@@ -1,8 +1,6 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
 {% for post in posts %}
-{% if user == post.author %}
 <article class="media content-section">
     <div class="media-body">
          <div class="article-metadata">
@@ -14,8 +12,5 @@
             <a class="btn btn-success mr-3" href="{{ post.link}}"> Go to Link </a>
  </div>
 </article>
-{% endif %}
-
 {% endfor %}
-	
 {% endblock content %}

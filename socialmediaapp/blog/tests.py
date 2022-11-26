@@ -6,7 +6,7 @@ from .models import Post
 class UrlTests(TestCase):
     def test_view(self):
         response = self.client.get('/post/new/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
 
     def test_viewregister(self):
         response = self.client.get('/register/')

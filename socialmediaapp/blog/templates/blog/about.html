@@ -1,6 +1,17 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
-	<h1>About Page</h1>
-{% endblock content %}
+{% for post in posts %}
+<article class="media content-section">
+    <div class="media-body">
+         <div class="article-metadata">
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}"> {{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+         </div>
+    	      <a class="mr-2" href="{% url 'profile-detail' post.author.profile.id %}">{{ post.author }}</a>
+            <small class="mr-3" class="text-muted">{{ post.date_posted |date:"d F Y H:i:s"}}</small>
+            <a class="btn btn-success mr-3" href="{{ post.link}}"> Go to Link </a>
+ </div>
+</article>
+{% endfor %}
 
+{% endblock content %}
