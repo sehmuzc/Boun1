@@ -9,10 +9,10 @@
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}"> {{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
          </div>
-    	      <a class="mr-2" href="{% url 'profile-detail' post.author.profile.id %}">{{ post.author }}</a>
+    	      <a class="mr-2" href="{% url 'profile' %}">{{ post.author }}</a>
             <small class="mr-3" class="text-muted">{{ post.date_posted |date:"d F Y H:i:s"}}</small>
-            <a class="btn btn-success mr-3" href="{{ post.link}}"> Go to Link </a>
- </div>
+            <a class="btn btn-success btn-sm mr-3" href="{{ post.link}}"> Go to Link </a>
+    </div>
 </article>
 {% endif %}
 

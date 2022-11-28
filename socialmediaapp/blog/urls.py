@@ -21,13 +21,15 @@ from .views import (
     PostDetailView,
     PostUpdateView,
     PostDeleteView,
+    AllPostListView
   )
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='blog-home'),
+    path('allposts/', PostListView.as_view(), name='blog-home'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
-    path('about/', views.posts_of_following_profiles, name='blog-about'),
+    path('friendposts/', views.posts_of_following_profiles, name='blog-about'),
+    path('', AllPostListView.as_view(), name='blog-allposts'),
 ]

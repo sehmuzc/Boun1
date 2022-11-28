@@ -20,7 +20,7 @@ from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import ProfileListView
-from users.views import ProfileDetailView
+from users.views import ProfileDetailView, FollowView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +28,7 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('friends/', ProfileListView.as_view(), name='friends'),
     path('friends/<int:pk>/', ProfileDetailView.as_view(), name='profile-detail'),
-    path('friends/<int:pk>/follow/', user_views.follow_unfollow_profile, name='profile-follow'),
+    path('friends/<int:pk>', FollowView, name='profile-follow'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('blog/', include('blog.urls')),

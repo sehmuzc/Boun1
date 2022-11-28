@@ -1,8 +1,8 @@
 from django.urls import path
-from .views Import ProfileListView, ProfileDetailView,
+from .views Import ProfileListView, ProfileDetailView, FollowView
 
 urlpatterns = [
     path('', ProfileListView.as_view(), name='profile-list-view'),
-    path('switch_follow/', views.follow_unfollow_profile, name='profile-follow'),
-    path('<pk>/', ProfileDetailView.as_view(), name='profile-detail-view'),
+    path('friends/<int:pk>', FollowView, name='profile-follow'),
+    path('<pk>/', ProfileDetailView.as_view(), name='profile-detail-view')
 ]

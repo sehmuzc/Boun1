@@ -1,26 +1,23 @@
 version: '3'
 services:
   db:
-    image: mysql:8.0.31
+    image: mysql:8
     ports:
       - "3307:3306"
     environment:
-      - MYSQL_DATABASE='socialdatabase'
-      - MYSQL_USER='mysql'
-      - MYSQL_PASSWORD='135135'
-      - MYSQL_ROOT_PASSWORD='135135'
+      - MYSQL_DATABASE=socialdatabase
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD:135135
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_HOST=''
-
     volumes:
       - /tmp/app/mysqld:/var/run/mysqld
-      - ./db:/var/lib/mysql
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
-      - /tmp/app/mysqld:/run/mysqld
+      - .:/socialmediaapp/
     depends_on:
       - db

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
@@ -11,11 +11,19 @@ from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy,reverse
+def FollowView(request,pk):
+    profile = get_object_or_404(Profile, id=request.POST.get('profile_id'))
+    if request.user.profile.following.filter(id=profile.user.id).exists():
+        request.user.profile.following.remove(profile.user)
+    else:
+        request.user.profile.following.add(profile.user)
+    return HttpResponseRedirect(reverse('profile-detail', args=[str(pk)]))
 
 def follow_unfollow_profile(request, **kwargs):
     my_profile = Profile.objects.get(user=request.user)
     pk = request.POST.get(pk)
-    print(pk)
     obj = Profile.objects.get(pk=pk)
     if obj.user in my_profile.following.all():
         my_profile.following.remove(obj.user)
