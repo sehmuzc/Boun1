@@ -10,11 +10,23 @@
          </div>
     	      <a class="mr-2" href="#">{{ object.author }}</a>
             <small class="mr-3" class="text-muted">{{ object.date_posted |date:"d F Y H:i:s"}}</small>
-              <a class="btn btn-success btn-sm mr-3"href="{{ post.link}}"> Go to Link </a>
+              <a class="btn btn-success btn-sm mr-1"href="{{ post.link}}"> Go to Link </a>
         {% if user == object.author %}
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update </a>
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}"> Delete </a>
         {% endif %}
+
+        {% if user != object.author %}
+                <form action = "{% url 'post-save' post.pk %}" method="POST">
+                    {% csrf_token %}
+                {% if save %}
+                        <button type="submit",  name="post_id" , value ="{{ post.id }}" , class="btn btn-warning btn-sm mt-1 mb-1"> Remove from Saved Posts </button>
+                {% else %}
+                        <button type="submit",  name="post_id" , value ="{{ post.id }}" , class="btn btn-primary mr-3"> Save Post </button>
+                {% endif %}
+                 </form>
+        {% endif %}
+
 
  </div>
 </article>

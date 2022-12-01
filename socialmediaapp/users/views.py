@@ -13,6 +13,7 @@ from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy,reverse
+
 def FollowView(request,pk):
     profile = get_object_or_404(Profile, id=request.POST.get('profile_id'))
     if request.user.profile.following.filter(id=profile.user.id).exists():
