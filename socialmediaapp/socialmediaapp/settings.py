@@ -81,9 +81,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'MemoryBox-mysql',
         'USER': 'root',  
-        'PASSWORD': '135135',
-        'HOST': 'db',
-        'PORT': '3306',
+
+        'PASSWORD': '******',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',  
+
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
         }  
