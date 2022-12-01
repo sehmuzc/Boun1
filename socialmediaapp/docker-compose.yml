@@ -1,23 +1,29 @@
 version: '3'
+
 services:
+
+=======
   db:
-    image: mysql:8
+    image: mysql
+    expose:
+      - 3306
     ports:
-      - "3307:3306"
+    - "3306:3306"
     environment:
-      - MYSQL_DATABASE=socialdatabase
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD:***
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_HOST=''
+      MYSQL_DATABASE: 'MemoryBox-mysql'
+      MYSQL_PORT: '3306'
+      MYSQL_ROOT_PASSWORD: '******'
     volumes:
-      - /tmp/app/mysqld:/var/run/mysqld
+      - ./data/mysql/db:/var/lib/mysql
+
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    container_name: MemoryBox
+    volumes:
+      - .:/MemoryBox
     ports:
       - "8000:8000"
-    volumes:
-      - .:/socialmediaapp/
     depends_on:
       - db
+

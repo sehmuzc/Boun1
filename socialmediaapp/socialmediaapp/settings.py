@@ -79,11 +79,13 @@ WSGI_APPLICATION = 'socialmediaapp.wsgi.application'
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'socialdatabase',  
+        'NAME': 'MemoryBox-mysql',
         'USER': 'root',  
+
         'PASSWORD': '******',
         'HOST': '127.0.0.1',
         'PORT': '3306',  
+
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
         }  
@@ -138,5 +140,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL ='blog-home'
+LOGIN_REDIRECT_URL ='blog-allposts'
 LOGIN_URL ='login'

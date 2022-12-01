@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse, get_object_or_404
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
@@ -8,20 +8,17 @@ from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from users.models import Profile
 from itertools import chain
-posts = [
-    {
-'author': 'Sehmuz',
-'title':'Post 1',
-'content':'First post content',
-'date_posted':' 29 Ekim 2022'
-    },
-    {
-'author': 'Cihan Cebiroglu',
-'title':'Euroleague',
-'content':'Fenerbahçe Euroleague şampisi olacak.',
-'date_posted':' 30 Ekim 2022'
-    }
-]
+from django.http import HttpResponseRedirect
+
+def SaveView(request,pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    if post.saving.filter(id=request.user.id).exists():
+        post.saving.remove(request.user.id)
+    else:
+        post.saving.add(request.user.id)
+    return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
+
+
 def posts_of_following_profiles(request):
     profile = Profile.objects.get(user=request.user)
     users = [user for user in profile.following.all()]
@@ -58,6 +55,14 @@ class AllPostListView(ListView):
     ordering = ['-date_posted']  # Ordering of posts so that newest comes on top
 class PostDetailView(DetailView):
     model = Post
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mypost = get_object_or_404(Post, id=self.kwargs['pk'])
+        save = False
+        if mypost.saving.filter(id=self.request.user.id).exists():
+            save = True
+        context["save"] = save
+        return context
 
 #LoginRequiredMixin post entry sayfasına girildiğinde logine yönlendirme için kullanılıyor.
 class PostCreateView(LoginRequiredMixin, CreateView):
