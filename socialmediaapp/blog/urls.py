@@ -22,12 +22,13 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
     AllPostListView,
-    SaveView
-  )
+    SaveView,
+)
 
 urlpatterns = [
     path('', AllPostListView.as_view(), name='blog-allposts'),
     path('myposts/', PostListView.as_view(), name='blog-home'),
+    path('savedposts/', views.saved_posts, name='blog-saved'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
