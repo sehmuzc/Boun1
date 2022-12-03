@@ -20,6 +20,6 @@ services:
     environment:
       MYSQL_DATABASE: 'MemoryBox-mysql'
       MYSQL_PORT: '3306'
-      MYSQL_ROOT_PASSWORD: '135135'
+      MYSQL_ROOT_PASSWORD: ********
     volumes:
       - ./data/mysql/db:/var/lib/mysql

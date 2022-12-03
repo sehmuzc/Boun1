@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'MemoryBox-mysql',
         'USER': 'root',  
-        'PASSWORD': '135135',
+        'PASSWORD': '******',
         'HOST': 'db',
         'PORT': '3306',
         'OPTIONS': {  

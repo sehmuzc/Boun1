@@ -30,6 +30,12 @@ def posts_of_following_profiles(request):
     if len(posts)>0:
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
     return render(request, 'blog/about.html', {'posts':qs})
+
+def saved_posts(request):
+    context =  {
+        'posts': Post.objects.filter(saving=request.user)
+       }
+    return render(request, 'blog/savedposts.html', context)
 def home(request):
     context =  {
         'posts': Post.objects.all()
@@ -48,6 +54,11 @@ class PostListView(ListView):
     context_object_name='posts'
     ordering = ['-date_posted']  # Ordering of posts so that newest comes on top
 
+class SavedPostListView(ListView):
+    model= Post
+    template_name = 'blog/savedposts.html'
+    context_object_name='posts'
+    ordering = ['-date_posted']  # Ordering of posts so that newest comes on top
 class AllPostListView(ListView):
     model= Post
     template_name = 'blog/allposts.html'
