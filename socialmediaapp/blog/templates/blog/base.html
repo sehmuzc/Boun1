@@ -46,6 +46,12 @@
             <a class="nav-item nav-link" href="{% url 'blog-about' %}">Friend Posts</a>
             <a class="nav-item nav-link" href="/friends">Users</a>
             <a class="nav-item nav-link" href="/post/new">Post Entry</a>
+
+            <form class="form-inline my-2 my-lg-0" method = POST action="{% url 'blog-search' %}">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" type="search" placeholder="Search MemoryBox" aria-label="Search" name="searched">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+            </form>
 {% endif %}
         </div>
         <!-- Navbar Right Side -->

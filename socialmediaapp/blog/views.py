@@ -1,14 +1,37 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.db.models import Q
 from .models import Post
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from django.views.generic import DetailView # This view is imported for blogpost details.
+from django.views.generic import DetailView
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from users.models import Profile
 from itertools import chain
-from django.http import HttpResponseRedirect
+from django.db.models import Count
+
+def searchposts(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        posts = Post.objects.filter(Q(title__icontains=searched) | Q(content__icontains=searched))
+        post_count = posts.count()
+        if post_count > 0:
+            return render(request, 'blog/searchposts.html',
+                      {'searched':searched,
+                       'posts':posts})
+        else:
+            return render(request, 'blog/searchposts.html',
+                          {'searched': searched, 'post_count':post_count})
+
+    else:
+        context = {
+            'posts': Post.objects.all()
+        }
+        return render(request, 'blog/searchposts.html', context)
+
 
 def SaveView(request,pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))

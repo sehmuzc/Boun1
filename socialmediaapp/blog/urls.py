@@ -34,5 +34,6 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('post/<int:pk>', SaveView, name='post-save'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
-    path('friendposts/', views.posts_of_following_profiles, name='blog-about')
+    path('friendposts/', views.posts_of_following_profiles, name='blog-about'),
+    path('searchposts/', views.searchposts, name='blog-search')
 ]
