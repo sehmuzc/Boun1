@@ -1,19 +1,35 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<article class="media content-section">
-    <div class="media-body">
-
-        <h2>{{object}}<h2>
+<div class="content-section">
+    <div class="media">
         <img class="rounded-circle account-img" src="{{object.image.url}}">
-            <form action = "{% url 'profile-follow' profile.pk %}" method="POST">
+        <div class="col-8 mb-3">
+            <dl class="row">
+                <dt class="col-sm-3">Username</dt>
+                <dd class="col-sm-9">{{profile.user}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">{{profile.user.first_name}} {{profile.user.last_name}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">E-Mail</dt>
+                <dd class="col-sm-8"> {{profile.user.email}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">Last Active</dt>
+                <dd class="col-sm-9">{{ profile.user.last_login |date:"d F Y H:i:s"}}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form action = "{% url 'profile-follow' profile.pk %}" method="POST">
                 {% csrf_token %}
         {% if follow %}
                 <button type="submit",  name="profile_id" , value ="{{ profile.id }}" , class="btn btn-danger mt-1 mb-1">Unfollow </button>
         {% else %}
                 <button type="submit",  name="profile_id" , value ="{{ profile.id }}" , class="btn btn-success mr-3"> Follow </button>
         {% endif %}
-            </form>
-
-     </div>
-</article>
+    </form>
+</div>
 {% endblock content %}

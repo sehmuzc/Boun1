@@ -2,15 +2,27 @@
 
 {% block content %}
 	{% for profile in profiles %}
-            <article class="media content-section">
-                <div class="media-body">
-                     <div class="ui segment">
-                            <h3>{{ profile }}<h3>
-                         <img class="rounded-circle account-img" src="{{profile.image.url}}">
-                         <a class="btn btn-success mr-3" href="{% url 'profile-detail' profile.pk %}"> Detail </a>
-                     </div>
-                 </div>
-            </article>
+            <div class="content-section">
+                 <div class="media">
+                      <img class="rounded-circle account-img" src="{{profile.image.url}}">
+                         <div class="media-body">
+                             <div class="col-8 mb-3">
+                                 <dl class="row">
+                                      <dt class="col-sm-3">Username</dt>
+                                      <dd class="col-sm-9">{{profile.user}}</dd>
+                                 </dl>
+
+                                   <dl class="row">
+                                      <dt class="col-sm-3">Name</dt>
+                                      <dd class="col-sm-9">{{profile.user.first_name}} {{profile.user.last_name}}</dd>
+                                 </dl>
+
+                               </div>
+
+                         </div>
+                </div>
+                <a class="btn btn-success mr-3" href="{% url 'profile-detail' profile.pk %}"> Detail </a>
+            </div>
      	{% endfor %}
 
 {% endblock content %}
