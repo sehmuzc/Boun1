@@ -67,7 +67,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
-class ProfileListView(ListView):
+class ProfileListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = 'users/profile_list.html'
     context_object_name = 'profiles'
@@ -75,7 +75,7 @@ class ProfileListView(ListView):
     def get_queryset(self):
         return Profile.objects.all().exclude(user=self.request.user)
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'users/profile_detail.html'
 

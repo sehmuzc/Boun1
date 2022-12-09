@@ -1,23 +1,27 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
 {% for post in posts %}
-<article class="media content-section">
-    <div class="media-body">
-         <div class="article-metadata">
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}"> {{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-         </div>
-        {% if user == post.author %}
-    	      <a class="mr-2" href="{% url 'profile' %}">{{ post.author }}</a>
-        {% else %}
-            <a class="mr-2" href="{% url 'profile-detail' post.author.profile.id %}">{{ post.author }}</a>
-        {% endif %}
-            <small class="mr-3" class="text-muted">{{ post.date_posted |date:"d F Y H:i:s"}}</small>
-            <a class="btn btn-success btn-sm mr-3" href="{{ post.link}}"> Go to Link </a>
- </div>
-</article>
+    <article class="media content-section">
+        <div class="media-body">
+             <div class="article-metadata">
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}"> {{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+             </div>
+            {% if user == post.author %}
+                  <a class="mr-2" href="{% url 'profile' %}">{{ post.author }}</a>
+            {% else %}
+                <a class="mr-2" href="{% url 'profile-detail' post.author.profile.id %}">{{ post.author }}</a>
+            {% endif %}
+                <small class="mr-3" class="text-muted">{{ post.date_posted |date:"d F Y H:i:s"}}</small>
+                <a class="btn btn-success btn-sm mr-3" href="{{ post.link}}"> Go to Link </a>
+                {% for tag in post.tags.all %}
+                    <a href="{% url 'blog-tags' tag.id %}" class="badge badge-info">{{ tag.name }}</a>
+                {% endfor %}
+        </div>
+    </article>
+
+
+
 
 {% endfor %}
-	
 {% endblock content %}

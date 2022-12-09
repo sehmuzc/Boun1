@@ -1,7 +1,13 @@
 {% extends "blog/base.html" %}
-
 {% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <p class="article-content"> You can view your own posts in this section.</p>
+        </div>
+    </article>
+
 {% for post in posts %}
+
 {% if user == post.author %}
 <article class="media content-section">
     <div class="media-body">
@@ -12,10 +18,11 @@
     	      <a class="mr-2" href="{% url 'profile' %}">{{ post.author }}</a>
             <small class="mr-3" class="text-muted">{{ post.date_posted |date:"d F Y H:i:s"}}</small>
             <a class="btn btn-success btn-sm mr-3" href="{{ post.link}}"> Go to Link </a>
+            {% for tag in post.tags.all %}
+                <a href="{% url 'blog-tags' tag.id %}" class="badge badge-info">{{ tag.name }}</a>
+            {% endfor %}
     </div>
 </article>
 {% endif %}
-
 {% endfor %}
-	
 {% endblock content %}

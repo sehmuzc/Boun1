@@ -1,18 +1,21 @@
-version: '3'
+version: '3.9'
 services:
   db:
-    image: mysql
+    image: mysql:8.0
     expose:
       - 3306
     ports:
-    - "3306:3306"
+    - "3307:3306"
     environment:
       MYSQL_DATABASE: 'MemoryBox-mysql'
       MYSQL_PORT: '3306'
-      MYSQL_ROOT_PASSWORD: '******'
+      MYSQL_ROOT_PASSWORD: $ {MYSQL_ROOT_PASSWORD}
     volumes:
       - ./data/mysql/db:/var/lib/mysql
-
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
@@ -22,4 +25,5 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
