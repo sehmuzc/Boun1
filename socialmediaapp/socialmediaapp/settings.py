@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sb%wei1m*zl77($xflzk*z$iku8km7*9iwu@9wm#lqjhpig$c%'
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit'
 ]
 
 MIDDLEWARE = [
@@ -76,12 +81,14 @@ WSGI_APPLICATION = 'socialmediaapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+PASS = str(os.getenv('PASSWORD'))
+
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'MemoryBox-mysql',
         'USER': 'root',  
-        'PASSWORD': '******',
+        'PASSWORD': PASS,
         'HOST': 'db',
         'PORT': '3306',
         'OPTIONS': {
@@ -140,3 +147,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL ='blog-allposts'
 LOGIN_URL ='login'
+
+TAGGIT_CASE_INSENSITIVE = True

@@ -23,7 +23,8 @@ from .views import (
     PostDeleteView,
     AllPostListView,
     SaveView,
-)
+    AddCommentView
+ )
 
 urlpatterns = [
     path('', AllPostListView.as_view(), name='blog-allposts'),
@@ -35,5 +36,7 @@ urlpatterns = [
     path('post/<int:pk>', SaveView, name='post-save'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('friendposts/', views.posts_of_following_profiles, name='blog-about'),
-    path('searchposts/', views.searchposts, name='blog-search')
+    path('tags/<int:pk>', views.tagged_posts, name='blog-tags'),
+    path('searchposts/', views.searchposts, name='blog-search'),
+    path('post/<int:pk>/comment/', AddCommentView.as_view(), name='add-comment'),
 ]

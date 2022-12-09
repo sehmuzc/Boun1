@@ -8,9 +8,18 @@
             <h2 class="article-title"> {{ object.title }}</h2>
             <p class="article-content">{{ object.content }}</p>
          </div>
-    	      <a class="mr-2" href="#">{{ object.author }}</a>
+                {% if user == object.author %}
+                  <a class="mr-2" href="{% url 'profile' %}">{{ object.author }}</a>
+            {% else %}
+                <a class="mr-2" href="{% url 'profile-detail' object.author.profile.id %}">{{ object.author }}</a>
+            {% endif %}
+
+
+
+
             <small class="mr-3" class="text-muted">{{ object.date_posted |date:"d F Y H:i:s"}}</small>
               <a class="btn btn-success btn-sm mr-1"href="{{ post.link}}"> Go to Link </a>
+
         {% if user == object.author %}
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update </a>
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}"> Delete </a>
@@ -31,5 +40,26 @@
  </div>
 </article>
 
+ <h2> Comments </h2>
 
+
+{% if not post.comments.all %}
+    No Comments Up to Now&nbsp
+{% else %}
+    {% for comment in post.comments.all %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <p class="article-content">{{ comment.body }}</p>
+                   <img class="rounded-circle shadow-1-strong me-3"
+                src="{{comment.name.profile.image.url}}" alt="avatar" width="30"
+                height="30" />
+             <small class="mr-3" class="text-muted">{{ comment.name }}</small>
+        <small class="mr-3" class="text-muted">{{ comment.date_added |date:"d F Y H:i:s"}}</small>
+         </div>
+
+ </article>
+{% endfor %}
+{% endif %}
+ <a class="btn btn-primary btn-sm mt-1 mb-1"href="{% url 'add-comment' post.pk %}"">&nbspAdd Comment</a>
 {% endblock content %}
