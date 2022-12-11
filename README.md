@@ -12,3 +12,6 @@ After that you will be using the http address given at the end of the below sent
 When you open the localhost address above ( http://127.0.0.1:8000/ in this example) you will be able to see the home page of the application.
 
 After completing the register process you will be able to view the home page with your username and password.
+
+---------------
+You can access the application here. http://54.89.208.162:8000
