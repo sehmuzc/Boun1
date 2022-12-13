@@ -27,7 +27,7 @@ load_dotenv()
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['54.89.208.162']
 
@@ -145,7 +145,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL ='blog-about'
+LOGIN_REDIRECT_URL ='blog-allposts'
 LOGIN_URL ='login'
 
 TAGGIT_CASE_INSENSITIVE = True
