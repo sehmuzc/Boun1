@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, re_path
+from django.conf import settings
+from django.views.static import serve
 from .import views
 from .views import (
     PostListView,
@@ -39,4 +41,6 @@ urlpatterns = [
     path('tags/<int:pk>', views.tagged_posts, name='blog-tags'),
     path('searchposts/', views.searchposts, name='blog-search'),
     path('post/<int:pk>/comment/', AddCommentView.as_view(), name='add-comment'),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 ]
